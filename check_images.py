@@ -43,8 +43,14 @@ def main():
     # TODO: 3. Define get_pet_labels() function to create pet image labels by
     # creating a dictionary with key=filename and value=file label to be used
     # to check the accuracy of the classifier function
-    answers_dic = get_pet_labels()
+    answers_dic = get_pet_labels(in_arg.dir)
 
+    print("\nanswers_dic has", len(answers_dic), "key-value pairs.\nbelow are 10 of them:")
+    prnt = 0
+    for key in answers_dic:
+        if prnt < 10:
+            print("%2d key: %-30s label: %-26s" % (prnt+1, key, answers_dic[key]))
+        prnt += 1
     # TODO: 4. Define classify_images() function to create the classifier 
     # labels with the classifier function uisng in_arg.arch, comparing the 
     # labels, and creating a dictionary of results (result_dic)
@@ -113,7 +119,7 @@ def get_input_args():
     return parser.parse_args()
 
 
-def get_pet_labels():
+def get_pet_labels(image_dir):
     """
     Creates a dictionary of pet labels based upon the filenames of the image 
     files. Reads in pet filenames and extracts the pet image labels from the 
@@ -126,8 +132,20 @@ def get_pet_labels():
      petlabels_dic - Dictionary storing image filename (as key) and Pet Image
                      Labels (as value)  
     """
-    pass
-
+    # Retrieve the filenames from image_dir
+    filename_list = listdir(image_dir)
+    # Create petlabels_dic empty dictionary
+    petlabels_dic = dict()
+    for index in range(len(filename_list)):
+        if filename_list[index] not in petlabels_dic:
+            label_value = ""
+            for word in filename_list[index].lower().split('_'):
+                if word.isalpha():
+                    label_value += word + " "
+            petlabels_dic[filename_list[index]] = label_value.strip()
+        else:
+            print("Warning: Duplicate files exist in directory", filename_list[index])
+    return petlabels_dic
 
 def classify_images():
     """
