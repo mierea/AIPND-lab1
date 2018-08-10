@@ -54,7 +54,7 @@ def main():
     # TODO: 4. Define classify_images() function to create the classifier 
     # labels with the classifier function uisng in_arg.arch, comparing the 
     # labels, and creating a dictionary of results (result_dic)
-    result_dic = classify_images()
+    result_dic = classify_images(in_arg.dir, answers_dic, in_arg.arch)
     
     # TODO: 5. Define adjust_results4_isadog() function to adjust the results
     # dictionary(result_dic) to determine if classifier correctly classified
@@ -147,7 +147,8 @@ def get_pet_labels(image_dir):
             print("Warning: Duplicate files exist in directory", filename_list[index])
     return petlabels_dic
 
-def classify_images():
+
+def classify_images(images_dir, petlabel_dic, model):
     """
     Creates classifier labels with classifier function, compares labels, and 
     creates a dictionary containing both labels and comparison of them to be
@@ -172,7 +173,25 @@ def classify_images():
                     idx 2 = 1/0 (int)   where 1 = match between pet image and 
                     classifer labels and 0 = no match between labels
     """
-    pass
+    results_dic = dict()
+
+    for key, value in petlabel_dic.items():
+        image_classification = classifier(images_dir + key, model).lower().strip()
+        if value in image_classification.split(", "):
+            results_dic[key] = [value, image_classification, 1]
+        else:
+            found = False
+            for label in image_classification.split(", "):
+                word = label.split(" ")
+                if (not found) and value in word:
+                    found = True
+                    results_dic[key] = [value, image_classification, 1]
+                    break
+            if not found:
+                results_dic[key] = [value, image_classification, 0]
+    # print(results_dic)
+    return results_dic
+    
 
 
 def adjust_results4_isadog():
