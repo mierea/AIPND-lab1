@@ -327,7 +327,6 @@ def calculates_results_stats(results_dic):
     results_stats['pct_correct_breed']    = pct_correct_breed
     results_stats['pct_label_matches']    = pct_label_matches
     
-    print(results_stats)
     return results_stats
 
 

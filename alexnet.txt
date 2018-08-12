@@ -1,0 +1,11 @@
+Model used was alexnet
+Number of images: 40 
+Number of dog images: 30 
+Number of 'Not-a' Dog images: 10
+Percentage Calculations:
+% Correct Dogs: 100.0
+% Correct BREED: 100.0
+% Correct not-a Dog: 80.0
+% Match: 75.0
+
+** Total Elapsed Runtime: 0:0:3
