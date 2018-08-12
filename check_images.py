@@ -64,7 +64,7 @@ def main():
 
     # TODO: 7. Define print_results() function to print summary results, 
     # incorrect classifications of dogs and breeds if requested.
-    print_results()
+    print_results(result_dic, results_stats_dic, in_arg.arch, True, True)
 
     # TODO: 1. Define end_time to measure total program runtime
     # by collecting end time
@@ -331,7 +331,7 @@ def calculates_results_stats(results_dic):
     return results_stats
 
 
-def print_results():
+def print_results(results_dic, results_stats, model, print_incorrect_dogs=False, print_incorrect_breed=False):
     """
     Prints summary results on the classification and then prints incorrectly 
     classified dogs and incorrectly classified dog breeds if user indicates 
@@ -360,10 +360,17 @@ def print_results():
     Returns:
            None - simply printing results.
     """    
-    pass
+    print("Model used was {}".format(model))
+    print("Number of images: {} \nNumber of dog images: {} \nNumber of 'Not-a' Dog images: {}".format(
+        results_stats['n_number_of_images'], results_stats['n_dog_images'], results_stats['n_non_dogs']
+    ))
+    print("Percentage Calculations:")
+    print("% Correct Dogs: {}".format(results_stats['pct_correct_dogs']))
+    print("% Correct BREED: {}".format(results_stats['pct_correct_non_dogs']))
+    print("% Correct not-a Dog: {}".format(results_stats['pct_correct_breed']))
+    print("% Match: {}".format(results_stats['pct_label_matches']))
+    
 
-                
-                
 # Call to main function to run the program
 if __name__ == "__main__":
     main()
